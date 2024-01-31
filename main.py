@@ -30,8 +30,6 @@ class AgendaApp:
         ttk.Button(root, text="Eliminar por Nombre", bootstyle="danger", command=self.eliminar_por_nombre).grid(row=4, column=1, padx=3, pady=3)
         ttk.Button(root, text="Buscar por Nombre",bootstyle="info", command=self.buscar_por_nombre).grid(row=5, column=0,padx=3,pady=3)
         ttk.Button(root, text="Buscar por Ubicación",bootstyle="info", command=self.buscar_por_ubicacion).grid(row=5, column=1,padx=3,pady=3)
-        
-     
 
         # Cargar datos existentes
         self.cargar_datos()
@@ -78,8 +76,8 @@ class AgendaApp:
         # Cargar datos existentes
         datos = self.cargar_datos()
 
-        # Buscar el contacto por nombre
-        resultados = [contacto for contacto in datos if contacto["nombre"].lower()== nombre_buscado.lower()]
+        # Buscar el contacto por nombre (si el nombre buscado está contenido en el nombre del contacto)
+        resultados = [contacto for contacto in datos if nombre_buscado.lower() in contacto["nombre"].lower()]
 
         if resultados:
             mensaje_resultados = "\n\n".join([f"Nombre: {c['nombre']}, Teléfono: {c['telefono']}, Ubicación: {c['ubicacion']}, Otros: {c['otros']}" for c in resultados])
@@ -87,6 +85,7 @@ class AgendaApp:
             return resultados
         else:
             messagebox.showinfo("\nResultados", "No se encontraron contactos con ese nombre.")
+
 
     def buscar_por_ubicacion(self):
         ubicacion_buscada = self.ubicacion_var.get().lower()
